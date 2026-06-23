@@ -1,11 +1,11 @@
-"""
+﻿"""
 FlowDesk Application Factory.
 
 Creates and configures the Flask application with all extensions,
 routes, and middleware. Follows the Application Factory pattern.
 """
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 from flask_restx import Api
 
@@ -32,22 +32,27 @@ def create_app(testing: bool = False) -> Flask:
     Returns:
         Configured Flask application instance.
     """
-    # ── Load settings ──
+    # â”€â”€ Load settings â”€â”€
     settings = get_settings()
 
-    # ── Setup logging ──
+    # â”€â”€ Setup logging â”€â”€
     log_level = "DEBUG" if settings.FLASK_DEBUG else "INFO"
     setup_logging(log_level)
 
-    # ── Create Flask app ──
+    # â”€â”€ Create Flask app â”€â”€
     app = Flask(__name__)
     app.config["SECRET_KEY"] = settings.SECRET_KEY
     app.config["TESTING"] = testing
 
-    # ── CORS ──
+    # â”€â”€ CORS â”€â”€
     CORS(app)
 
-    # ── Flask-RESTX API ──
+    @app.get("/")
+    def web_app():
+        """Serve the FlowDesk operator UI."""
+        return render_template("index.html")
+
+    # â”€â”€ Flask-RESTX API â”€â”€
     api = Api(
         app,
         version="1.0",
@@ -61,15 +66,15 @@ def create_app(testing: bool = False) -> Flask:
         prefix="",
     )
 
-    # ── Register namespaces ──
+    # â”€â”€ Register namespaces â”€â”€
     api.add_namespace(tickets_ns)
     api.add_namespace(users_ns)
 
-    # ── Register middleware ──
+    # â”€â”€ Register middleware â”€â”€
     register_error_handlers(app)
     register_rate_limiting(app)
 
-    # ── Health check endpoint ──
+    # â”€â”€ Health check endpoint â”€â”€
     @app.route("/health")
     def health():
         """Health check endpoint for Docker/Kubernetes."""
@@ -92,3 +97,5 @@ def create_app(testing: bool = False) -> Flask:
         return jsonify(health_status)
 
     return app
+
+

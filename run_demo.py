@@ -1,5 +1,5 @@
-"""
-FlowDesk Demo Server — Runs the API with in-memory mocks.
+﻿"""
+FlowDesk Demo Server â€” Runs the API with in-memory mocks.
 
 No external services required (no Docker, no PostgreSQL, no Redis, etc.).
 All data lives in memory for the duration of the session.
@@ -18,7 +18,7 @@ from app.domain.entities.ticket import (
     UserRole,
 )
 
-# ─── In-Memory Mock Implementations ─────────────────────────────────
+# In-Memory Mock Implementations
 
 
 class MockTicketRepository:
@@ -179,7 +179,7 @@ class MockStoragePort:
         self._files.pop(key, None)
 
 
-# ─── Setup & Run ─────────────────────────────────────────────────────
+# Setup & Run
 
 
 def main():
@@ -231,21 +231,31 @@ def main():
     demo_tickets = [
         Ticket.create(
             title="Login page returns 500 error",
-            description="When clicking the login button with valid credentials, the server returns a 500 error. This started after the last deployment.",
+            description=(
+                "When clicking the login button with valid credentials, "
+                "the server returns a 500 error. This started after the last "
+                "deployment."
+            ),
             creator_id="user-001",
             priority=TicketPriority.HIGH,
             tags=["bug", "auth", "production"],
         ),
         Ticket.create(
             title="Dashboard loading slowly",
-            description="Dashboard takes 10+ seconds to render charts. Performance issue affecting multiple users.",
+            description=(
+                "Dashboard takes 10+ seconds to render charts. Performance "
+                "issue affecting multiple users."
+            ),
             creator_id="user-002",
             priority=TicketPriority.MEDIUM,
             tags=["performance", "dashboard"],
         ),
         Ticket.create(
             title="Feature request: dark mode",
-            description="Users have requested a dark mode toggle in settings. Multiple customer complaints about eye strain.",
+            description=(
+                "Users have requested a dark mode toggle in settings. "
+                "Multiple customer complaints about eye strain."
+            ),
             creator_id="user-001",
             priority=TicketPriority.LOW,
             tags=["feature", "ui"],
@@ -281,3 +291,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

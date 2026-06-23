@@ -1,5 +1,5 @@
-"""
-Integration Tests — API Endpoints.
+﻿"""
+Integration Tests â€” API Endpoints.
 
 Tests the full Flask API endpoints with mocked infrastructure.
 These tests verify the HTTP layer: routes, status codes, payloads, and error responses.
@@ -11,6 +11,10 @@ import json
 class TestHealthEndpoint:
     """Tests for the /health endpoint."""
 
+    def test_web_app_returns_200(self, client):
+        response = client.get("/")
+        assert response.status_code == 200
+        assert b"FlowDesk" in response.data
     def test_health_returns_200(self, client):
         response = client.get("/health")
         assert response.status_code == 200
@@ -151,3 +155,4 @@ class TestSwaggerDocs:
         data = response.get_json()
         assert "info" in data
         assert data["info"]["title"] == "FlowDesk API"
+
