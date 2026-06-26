@@ -1,0 +1,157 @@
+/* ═══════════════════════════════════════════════════════════
+   FlowDesk — Animations & Feedback
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Keyframes ──────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Record Entry Animation ─────────────────────────────── */
+
+.record {
+  animation: slideUp 250ms ease both;
+}
+
+/* ─── Toast Variants ─────────────────────────────────────── */
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.toast.toast-success {
+  border-left: 3px solid var(--success);
+}
+
+.toast.toast-error {
+  border-left: 3px solid var(--danger);
+  background: #2a1a18;
+}
+
+.toast.toast-info {
+  border-left: 3px solid var(--info);
+}
+
+/* ─── Loading Spinner ────────────────────────────────────── */
+
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.spinner::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+  flex-shrink: 0;
+}
+
+/* ─── Skeleton Loader ────────────────────────────────────── */
+
+.skeleton {
+  display: grid;
+  gap: 10px;
+}
+
+.skeleton-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.skeleton-line {
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--surface-muted) 25%,
+    var(--surface-hover) 50%,
+    var(--surface-muted) 75%
+  );
+  background-size: 800px 14px;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-line.w-60 { width: 60%; }
+.skeleton-line.w-80 { width: 80%; }
+.skeleton-line.w-40 { width: 40%; }
+
+.skeleton-card .skeleton-line + .skeleton-line {
+  margin-top: 10px;
+}
+
+/* ─── Delete Confirmation ────────────────────────────────── */
+
+.confirm-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger);
+  animation: slideUp 180ms ease both;
+  font-size: 0.84rem;
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.confirm-bar .button {
+  min-height: 28px;
+  font-size: 0.78rem;
+  padding: 0 10px;
+}
+
+.confirm-bar .button.danger {
+  background: var(--danger);
+  color: white;
+  border-color: var(--danger);
+}
+
+.confirm-bar .button.danger:hover {
+  background: #9a3832;
+}
+
+.confirm-bar .confirm-text {
+  flex: 1;
+}
