@@ -1,4 +1,4 @@
-﻿const state = {
+const state = {
   comments: [],
   selectedTicket: null,
   tickets: [],
@@ -310,19 +310,21 @@ async function loadTicketDetail(ticketId) {
 
 async function createUser(event) {
   event.preventDefault();
-  const form = new FormData(event.currentTarget);
+  const formEl = event.currentTarget;
+  const form = new FormData(formEl);
   await api("/api/v1/users/", {
     method: "POST",
     body: JSON.stringify(Object.fromEntries(form)),
   });
-  event.currentTarget.reset();
+  formEl.reset();
   await refreshData();
   showToast("User created");
 }
 
 async function createTicket(event) {
   event.preventDefault();
-  const form = new FormData(event.currentTarget);
+  const formEl = event.currentTarget;
+  const form = new FormData(formEl);
   const payload = Object.fromEntries(form);
   payload.tags = payload.tags
     ? payload.tags.split(",").map((tag) => tag.trim()).filter(Boolean)
@@ -332,7 +334,7 @@ async function createTicket(event) {
     method: "POST",
     body: JSON.stringify(payload),
   });
-  event.currentTarget.reset();
+  formEl.reset();
   await refreshData();
   await loadTicketDetail(ticket.id);
   showToast("Ticket created");
